@@ -148,9 +148,6 @@
                     <div class="grid grid-cols-2 gap-1.5">
                         <select id="filter-category" class="bg-dark-bg border border-white/10 rounded-md px-2 py-1.5 text-xs text-text-dtMuted focus:outline-none focus:border-teal-500">
                             <option value="">Kategorie...</option>
-                            <option value="origin">Herkunft</option>
-                            <option value="affiliation">Zugehörigkeit</option>
-                            <option value="firstAppearance">Erster Auftritt</option>
                         </select>
                         <select id="filter-value" class="bg-dark-bg border border-white/10 rounded-md px-2 py-1.5 text-xs text-text-dtMuted focus:outline-none focus:border-teal-500" disabled>
                             <option value="">Wert wählen...</option>
@@ -240,27 +237,8 @@
                                 <i class="fa-solid fa-id-card text-teal-500"></i>
                                 <span>Steckbrief</span>
                             </h3>
-                            <dl class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                                <div class="border-b border-white/5 pb-2">
-                                    <dt class="text-text-dtMuted text-[11px] uppercase tracking-wider">Alter</dt>
-                                    <dd id="detail-age" class="font-medium text-text-dtMain mt-0.5">-</dd>
-                                </div>
-                                <div class="border-b border-white/5 pb-2">
-                                    <dt class="text-text-dtMuted text-[11px] uppercase tracking-wider">Rolle / Titel</dt>
-                                    <dd id="detail-role" class="font-medium text-text-dtMain mt-0.5">-</dd>
-                                </div>
-                                <div class="border-b border-white/5 pb-2">
-                                    <dt class="text-text-dtMuted text-[11px] uppercase tracking-wider">Herkunft</dt>
-                                    <dd id="detail-origin" class="font-medium text-text-dtMain mt-0.5">-</dd>
-                                </div>
-                                <div class="border-b border-white/5 pb-2">
-                                    <dt class="text-text-dtMuted text-[11px] uppercase tracking-wider">Zugehörigkeit</dt>
-                                    <dd id="detail-affiliation" class="font-medium text-text-dtMain mt-0.5">-</dd>
-                                </div>
-                                <div class="sm:col-span-2 border-b border-white/5 pb-2">
-                                    <dt class="text-text-dtMuted text-[11px] uppercase tracking-wider">Erster Auftritt</dt>
-                                    <dd id="detail-first-appearance" class="font-medium text-teal-400 mt-0.5">-</dd>
-                                </div>
+                            <dl id="detail-profile" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                                <!-- Steckbrief fields injected via JS -->
                             </dl>
                         </div>
 
@@ -301,11 +279,36 @@
         let activeCharacterName = null;
         let activeFilters = [];
 
-        const categoryLabels = {
-            origin: 'Herkunft',
-            affiliation: 'Zugehörigkeit',
-            firstAppearance: 'Erster Auftritt'
-        };
+        let categoryLabels = {};
+
+        function escapeHtml(str) {
+            return String(str).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]);
+        }
+
+        // Steckbrief helpers: profile is an array of { key, label, value, filterable?, wide?, highlight? }
+        function getProfileValue(character, key) {
+            const field = (character.profile || []).find(f => f.key === key);
+            return field ? field.value : undefined;
+        }
+
+        // Build filter categories from all filterable profile fields (first label wins, order of appearance)
+        function initFilterCategories() {
+            categoryLabels = {};
+            characters.forEach(c => (c.profile || []).forEach(f => {
+                if (f.filterable && f.key && !(f.key in categoryLabels)) {
+                    categoryLabels[f.key] = f.label || f.key;
+                }
+            }));
+
+            const categorySelect = document.getElementById('filter-category');
+            categorySelect.innerHTML = '<option value="">Kategorie...</option>';
+            Object.entries(categoryLabels).forEach(([key, label]) => {
+                const opt = document.createElement('option');
+                opt.value = key;
+                opt.textContent = label;
+                categorySelect.appendChild(opt);
+            });
+        }
 
         async function initData() {
             try {
@@ -314,6 +317,7 @@
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 characters = await response.json();
+                initFilterCategories();
                 
                 if (characters.length > 0) {
                     activeCharacterName = characters[0].name;
@@ -348,7 +352,7 @@
                 return;
             }
 
-            const values = [...new Set(characters.map(c => c[category]).filter(Boolean))];
+            const values = [...new Set(characters.map(c => getProfileValue(c, category)).filter(Boolean))];
             values.forEach(v => {
                 const opt = document.createElement('option');
                 opt.value = v;
@@ -421,10 +425,10 @@
                 const matchesSearch = !searchQuery || 
                     c.name.toLowerCase().includes(searchQuery) ||
                     (c.quote && c.quote.toLowerCase().includes(searchQuery)) ||
-                    (c.role && c.role.toLowerCase().includes(searchQuery)) ||
+                    (c.profile || []).some(f => f.value && String(f.value).toLowerCase().includes(searchQuery)) ||
                     (c.description && c.description.toLowerCase().includes(searchQuery));
                 
-                const matchesFilters = activeFilters.every(f => c[f.category] === f.value);
+                const matchesFilters = activeFilters.every(f => getProfileValue(c, f.category) === f.value);
 
                 return matchesSearch && matchesFilters;
             });
@@ -441,6 +445,8 @@
 
             listEl.innerHTML = filtered.map(c => {
                 const isActive = c.name === activeCharacterName;
+                const role = getProfileValue(c, 'role');
+                const affiliation = getProfileValue(c, 'affiliation');
                 return `
                     <div onclick="selectCharacter('${c.name.replace(/'/g, "\\'")}')" class="p-3 rounded-lg border transition-all cursor-pointer flex items-center space-x-3 ${isActive ? 'bg-teal-500/20 border-teal-500/50 text-white' : 'bg-dark-card/60 border-white/5 hover:bg-dark-card text-text-dtMuted'}">
                         <img src="${c.image || 'https://placehold.co/100'}" alt="${c.name}" class="w-11 h-11 rounded-md object-cover bg-dark-bg border border-white/10 shrink-0" onerror="this.onerror=null; this.src='https://placehold.co/100x100/1e2422/2c5b59?text=?';">
@@ -448,7 +454,7 @@
                             <div class="flex justify-between items-baseline">
                                 <h4 class="font-bold text-sm font-serif tracking-wide truncate ${isActive ? 'text-teal-300' : 'text-text-dtMain'}">${c.name}</h4>
                             </div>
-                            <p class="text-[11px] text-text-dtFaint truncate mt-0.5">${c.role || 'Keine Rolle'} ${c.affiliation ? '• ' + c.affiliation : ''}</p>
+                            <p class="text-[11px] text-text-dtFaint truncate mt-0.5">${role || 'Keine Rolle'} ${affiliation ? '• ' + affiliation : ''}</p>
                         </div>
                     </div>
                 `;
@@ -485,11 +491,18 @@
             fullBodyEl.src = character.fullBodyImage || character.image || '';
 
             // Steckbrief
-            document.getElementById('detail-age').innerText = character.age || '-';
-            document.getElementById('detail-role').innerText = character.role || '-';
-            document.getElementById('detail-origin').innerText = character.origin || '-';
-            document.getElementById('detail-affiliation').innerText = character.affiliation || '-';
-            document.getElementById('detail-first-appearance').innerText = character.firstAppearance || '-';
+            const profileContainer = document.getElementById('detail-profile');
+            const profile = character.profile || [];
+            if (profile.length > 0) {
+                profileContainer.innerHTML = profile.map(field => `
+                    <div class="${field.wide ? 'sm:col-span-2 ' : ''}border-b border-white/5 pb-2">
+                        <dt class="text-text-dtMuted text-[11px] uppercase tracking-wider">${escapeHtml(field.label || field.key || '')}</dt>
+                        <dd class="font-medium ${field.highlight ? 'text-teal-400' : 'text-text-dtMain'} mt-0.5">${escapeHtml(field.value || '-')}</dd>
+                    </div>
+                `).join('');
+            } else {
+                profileContainer.innerHTML = `<p class="text-xs text-text-dtMuted sm:col-span-2">Keine Steckbrief-Angaben.</p>`;
+            }
 
             // Zitat / Motto
             const quoteBox = document.getElementById('quote-box');
