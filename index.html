@@ -86,14 +86,19 @@
             }
         }
 
-        // Placeholder image URL in theme colors (placehold.co needs hex values)
-        function themeHex(name) {
-            const channels = getComputedStyle(document.documentElement).getPropertyValue(`--color-${name}`).trim().split(/\s+/);
-            return channels.map(n => Number(n).toString(16).padStart(2, '0')).join('');
-        }
-
-        function placeholderImg(size, text, bg = 'card', fg = 'accent-400') {
-            return `https://placehold.co/${size}/${themeHex(bg)}/${themeHex(fg)}?text=${encodeURIComponent(text)}`;
+        // Shows an image once it has a source; a missing or broken source hides it via onVisibility(false)
+        function setImage(el, src, onVisibility) {
+            el.onerror = () => {
+                el.onerror = null;
+                onVisibility(false);
+            };
+            if (src) {
+                el.src = src;
+                onVisibility(true);
+            } else {
+                el.removeAttribute('src');
+                onVisibility(false);
+            }
         }
     </script>
     <style>
@@ -209,15 +214,15 @@
                 <!-- Header Banner & Profile Element (Social Media Style) -->
                 <div class="bg-dark-card rounded-xl overflow-hidden relative border border-line/10 shadow-sm">
                     <!-- Banner Image (Top half) -->
-                    <div class="h-32 md:h-44 bg-dark-panel relative border-b border-line/10 overflow-hidden">
-                        <img id="detail-banner" src="" alt="Profil Banner" class="w-full h-full object-cover" onerror="this.onerror=null; this.src=placeholderImg('1200x400', 'Kein Banner', 'panel');">
+                    <div id="detail-banner-wrap" class="h-32 md:h-44 bg-dark-panel relative border-b border-line/10 overflow-hidden">
+                        <img id="detail-banner" alt="Profil Banner" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-dark-card/60 via-transparent to-transparent"></div>
                     </div>
 
                     <!-- Profile Avatar & Name (Bottom half) -->
-                    <div class="px-6 pb-5 pt-0 relative flex flex-col md:flex-row gap-5 items-start md:items-end -mt-12 md:-mt-14">
-                        <div class="relative shrink-0 mx-auto md:mx-0">
-                            <img id="detail-image" src="" alt="Profilbild" class="w-24 h-24 md:w-28 md:h-28 rounded-lg object-cover border-2 border-accent-500/50 shadow-md bg-dark-bg" onerror="this.onerror=null; this.src=placeholderImg('400x400', 'Kein Bild');">
+                    <div id="detail-profile-row" class="px-6 pb-5 pt-0 relative flex flex-col md:flex-row gap-5 items-start md:items-end -mt-12 md:-mt-14">
+                        <div id="detail-image-wrap" class="relative shrink-0 mx-auto md:mx-0">
+                            <img id="detail-image" alt="Profilbild" class="w-24 h-24 md:w-28 md:h-28 rounded-lg object-cover border-2 border-accent-500/50 shadow-md bg-dark-bg">
                         </div>
                         <div class="flex-1 text-center md:text-left space-y-1">
                             <h2 id="detail-name" class="font-serif text-2xl md:text-3xl font-bold text-text-dtMain tracking-wider">Charakter Name</h2>
@@ -229,14 +234,14 @@
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                     
                     <!-- Left Column: Full-Body Visual Presentation -->
-                    <div class="lg:col-span-5 flex flex-col items-center">
+                    <div id="detail-fullbody-col" class="lg:col-span-5 flex flex-col items-center">
                         <div class="w-full overflow-hidden rounded-lg border border-accent-500/30 relative group shadow-md bg-dark-card">
-                            <img id="detail-fullbody" src="" alt="Ganzkörperbild" class="w-full h-auto max-h-[800px] object-cover object-top transition-transform duration-500 group-hover:scale-105" onerror="this.onerror=null; this.src=placeholderImg('600x1000', 'Kein Ganzkoerperbild');">
+                            <img id="detail-fullbody" alt="Ganzkörperbild" class="w-full h-auto max-h-[800px] object-cover object-top transition-transform duration-500 group-hover:scale-105">
                         </div>
                     </div>
 
                     <!-- Right Column: Steckbrief, Quote & Relationships -->
-                    <div class="lg:col-span-7 space-y-6">
+                    <div id="detail-info-col" class="lg:col-span-7 space-y-6">
                         
                         <!-- Zitat / Leitmotto -->
                         <div id="quote-box" class="bg-dark-card/90 p-5 rounded-lg border border-accent-500/30 bg-accent-500/5 relative overflow-hidden shadow-sm">
@@ -464,7 +469,7 @@
                 const affiliation = getProfileValue(c, 'affiliation');
                 return `
                     <div onclick="selectCharacter('${c.name.replace(/'/g, "\\'")}')" class="p-3 rounded-lg border transition-all cursor-pointer flex items-center space-x-3 ${isActive ? 'bg-accent-500/20 border-accent-500/50 text-text-strong' : 'bg-dark-card/60 border-line/5 hover:bg-dark-card text-text-dtMuted'}">
-                        <img src="${c.image || placeholderImg('100x100', '?', 'panel', 'accent-500')}" alt="${c.name}" class="w-11 h-11 rounded-md object-cover bg-dark-bg border border-line/10 shrink-0" onerror="this.onerror=null; this.src=placeholderImg('100x100', '?', 'panel', 'accent-500');">
+                        ${c.image ? `<img src="${c.image}" alt="${c.name}" class="w-11 h-11 rounded-md object-cover bg-dark-bg border border-line/10 shrink-0" onerror="this.remove()">` : ''}
                         <div class="flex-1 min-w-0">
                             <div class="flex justify-between items-baseline">
                                 <h4 class="font-bold text-sm font-serif tracking-wide truncate ${isActive ? 'text-accent-300' : 'text-text-dtMain'}">${c.name}</h4>
@@ -474,6 +479,22 @@
                     </div>
                 `;
             }).join('');
+        }
+
+        // Collapse the space of hidden images: avatar only overlaps the banner when both exist,
+        // and the info column takes the full width without a full-body image
+        function updateDetailLayout() {
+            const isVisible = id => !document.getElementById(id).classList.contains('hidden');
+
+            const overlap = isVisible('detail-banner-wrap') && isVisible('detail-image-wrap');
+            const profileRow = document.getElementById('detail-profile-row');
+            ['-mt-12', 'md:-mt-14', 'pt-0'].forEach(cls => profileRow.classList.toggle(cls, overlap));
+            profileRow.classList.toggle('pt-5', !overlap);
+
+            const hasFullBody = isVisible('detail-fullbody-col');
+            const infoCol = document.getElementById('detail-info-col');
+            infoCol.classList.toggle('lg:col-span-7', hasFullBody);
+            infoCol.classList.toggle('lg:col-span-12', !hasFullBody);
         }
 
         // Render Character Detail Page
@@ -496,14 +517,13 @@
             document.getElementById('detail-name').innerText = character.name;
             
             // Banner & Profile & Full-Body Images
-            const bannerEl = document.getElementById('detail-banner');
-            bannerEl.src = character.bannerImage || '';
-
-            const imageEl = document.getElementById('detail-image');
-            imageEl.src = character.image || '';
-
-            const fullBodyEl = document.getElementById('detail-fullbody');
-            fullBodyEl.src = character.fullBodyImage || character.image || '';
+            const showSection = id => visible => {
+                document.getElementById(id).classList.toggle('hidden', !visible);
+                updateDetailLayout();
+            };
+            setImage(document.getElementById('detail-banner'), character.bannerImage, showSection('detail-banner-wrap'));
+            setImage(document.getElementById('detail-image'), character.image, showSection('detail-image-wrap'));
+            setImage(document.getElementById('detail-fullbody'), character.fullBodyImage || character.image, showSection('detail-fullbody-col'));
 
             // Steckbrief
             const profileContainer = document.getElementById('detail-profile');
@@ -537,11 +557,11 @@
                 relContainer.innerHTML = character.relationships.map(rel => {
                     const targetChar = characters.find(c => c.name === rel.targetName);
                     const targetName = rel.targetName || 'Unbekannte Figur';
-                    const targetImg = targetChar ? targetChar.image : '';
+                    const targetImg = targetChar && targetChar.image;
 
                     return `
                         <div class="p-2.5 rounded-lg bg-dark-panel border border-line/10 flex items-start space-x-2.5 shadow-sm">
-                            <img src="${targetImg}" class="w-7 h-7 rounded-full object-cover bg-dark-bg shrink-0 border border-line/10" onerror="this.onerror=null; this.src=placeholderImg('100x100', '?', 'panel', 'accent-500');">
+                            ${targetImg ? `<img src="${targetImg}" alt="${targetName}" class="w-7 h-7 rounded-full object-cover bg-dark-bg shrink-0 border border-line/10" onerror="this.remove()">` : ''}
                             <div class="flex-1 min-w-0 text-xs">
                                 <div class="font-serif font-semibold text-text-dtMain cursor-pointer hover:text-accent-400 truncate tracking-wide" onclick="${targetChar ? `selectCharacter('${targetChar.name.replace(/'/g, "\\'")}')` : ''}">${targetName}</div>
                                 <div class="text-accent-400 font-medium text-[11px] my-0.5">${rel.type}</div>
