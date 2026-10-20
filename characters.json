@@ -63,21 +63,24 @@
         ]
     },
     {
-        "name": "An Cabut (Platzhalter)",
-        "quote": "„Ein Geheimnis bewahrt man am besten, indem man es in voller Sicht versteckt.“",
+        "name": "An Cabut",
+        "quote": "„Ihr werdet mir gehorchen und zwar bedingungslos.“",
         "profile": [
-            { "key": "age", "label": "Alter", "value": "62 Jahre" },
-            { "key": "role", "label": "Rolle / Titel", "value": "Gelehrter & Artefakt-Schmied" },
-            { "key": "origin", "label": "Herkunft", "value": "Orakel von Illyria", "filterable": true },
-            { "key": "affiliation", "label": "Zugehörigkeit", "value": "Unabhängig", "filterable": true },
-            { "key": "firstAppearance", "label": "Erster Auftritt", "value": "Kapitel 3: Das verstaubte Archiv", "filterable": true, "wide": true, "highlight": true }
+            { "key": "age", "label": "Alter", "value": "etwa 55 Jahre" },
+            { "key": "role", "label": "Rolle / Titel", "value": "Chalif und Grovizir" },
+            { "key": "origin", "label": "Herkunft", "value": "unbekannt (Südpol)", "filterable": true },
+            { "key": "affiliation", "label": "Zugehörigkeit", "value": "Königshof", "filterable": true },
+            { "key": "firstAppearance", "label": "Erster Auftritt", "value": "Kapitel 3", "filterable": true, "wide": true, "highlight": true }
         ],
-        "description": "Eldrin verbrachte Jahrzehnte damit, alte arkanische Schriften zu übersetzen. Er bildete Aurelia aus, verschwand jedoch nach der Entdeckung der Schicksalstafel spurlos aus der Stadt.",
+        "description": "An Cabut gehört als Chalif, und damit oberster geistlicher Würdenträger, zu den einflussreichsten Persönlichkeiten des Südpols. Doch seine tatsächliche Autorität reicht noch weit über religiöse Angelegenheiten hinaus, da er zugleich seit einigen Jahren das Amt des Großvizirs bekleidet. Damit ist er der engste Berater des Malik, des südpolischen Herrschers, und dessen Rechte Hand. \n\n An Cabut besitzt eine große, außergewöhnlich hagere Gestalt. Sein kantiges Gesicht wird von einer langen Hakennase, tief liegenden dunklen Augen und einem sorgfältig gestutzten, spitz zulaufenden Bart geprägt. Meist trägt er luxuriöse rot-schwarze Gewänder mit kunstvollen Stickereien sowie den auffälligen roten Turban der südpolischen geistlichen Würdenträger. Seine Haltung ist steif und elegant zugleich, sein Blick kühl und berechnend. Hinter seiner würdevollen Erscheinung wiederum verbirgt sich ein Mann, dessen Ehrgeiz und Machtbewusstsein kaum Grenzen kennen. \n\n Seit Jahren ist An Cabut ein fester Bestandteil des malikischen Hofes. Seine herausragende Stellung verdankt er nicht körperlicher Stärke oder besonderer Beliebtheit, sondern seinem scharfen Verstand, seiner politischen Gewandtheit und seiner Fähigkeit, andere Menschen zu beeinflussen. Er versteht es, Autorität auszustrahlen, ohne seine Stimme erheben zu müssen, und nutzt die bestehenden Machtstrukturen geschickt zu seinem Vorteil. Dabei blieb in der Vergangenheit oft unklar, welche Absichten er tatsächlich verfolgt. \n\n Für Alkazam war der Chalif schon immer eine unangenehme Erscheinung. Doch als der sechzehnte Geburtstag des Thronfolgers eine verhängnisvolle Wendung nimmt, wird aus der gegenseitigen Abneigung eine offene Feindschaft. Auch wenn Alkazam es nicht genauer erklären kann, ist für ihn klar, dass An Cabut in den Tod des Malik verwickelt sein muss. Gleichzeitig versucht An Cabut, den jungen Amir unter seine Kontrolle zu bringen, und schreckt dabei vor nichts zurück.  \n\n Dabei gelingt es An Cabut, seine politische Stellung weiter auszubauen. Während Alkazam um seine Freiheit und die Wahrheit über das Schicksal seines Vaters kämpft, zieht der Chalif die Fäden der Macht immer enger zusammen. Für ihn sind Menschen vor allem Figuren in einem größeren Spiel – und wer sich seinem Willen widersetzt, muss mit den Konsequenzen rechnen.",
         "bannerImage": "img/ancabut_banner.png",
         "image": "img/ancabut_portrait.png",
         "fullBodyImage": "img/ancabut_full.png",
         "relationships": [
-            { "targetName": "Aurelia Vance", "type": "Schützling", "notes": "Betrachtet Aurelia wie eine eigene Tochter." }
+            { "targetName": "Alkazam", "type": "Gegenspieler", "notes": "Südpolischer Thronfolger durch Geburtsrecht" },
+            { "targetName": "Malik Arvada", "type": "Herrscher", "notes": "Steht mit den Jahren zunehmend unter An Cabuts Einfluss." },
+            { "targetName": "San'Dschinn", "type": "Feind", "notes": "Großes Misstrauen gegenüber dem Chalifen und Großvizir." },
+            { "targetName": "Chalifische", "type": "Beschützer und Diener", "notes": "Die treuergbenen Anhänger des Chalifen." }
         ]
     }
 ]
