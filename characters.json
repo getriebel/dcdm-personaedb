@@ -2,11 +2,13 @@
     {
         "name": "Alkazam",
         "quote": "„Manchmal beginnt der schwierigste Weg dort, wo das Richtige liegt.“",
-        "age": "16 Jahre",
-        "role": "Amir (Prinz des Südpolreichs)",
-        "origin": "Madina",
-        "affiliation": "Königliche Familie des Südpols",
-        "firstAppearance": "Kapitel 1",
+        "profile": [
+            { "key": "age", "label": "Alter", "value": "16 Jahre" },
+            { "key": "role", "label": "Rolle / Titel", "value": "Amir (Prinz des Südpolreichs)" },
+            { "key": "origin", "label": "Herkunft", "value": "Madina", "filterable": true },
+            { "key": "affiliation", "label": "Zugehörigkeit", "value": "Königliche Familie des Südpols", "filterable": true },
+            { "key": "firstAppearance", "label": "Erster Auftritt", "value": "Kapitel 1", "filterable": true, "wide": true, "highlight": true }
+        ],
         "description": "Mit sechzehn Jahren scheint Alkazams Zukunft bereits festgeschrieben. Als Thronfolger des Kontinents des Südpols, als Amir, wächst er zwischen goldenen Kuppeln, gewaltigen Palästen und den endlosen Sandmeeren seiner Heimat auf. Eines Tages soll er seinem Vater, dem Malik, auf den Thron folgen und über den Südpol herrschen. \n\n Doch Alkazam unterscheidet sich von vielen Herrschersöhnen. Er sucht keine Macht. Während andere in ihm den zukünftigen Malik sehen, interessiert ihn weit mehr, was hinter den Mauern des Palastes liegt – die Menschen seines Reiches, fremde Kulturen und die Geheimnisse einer Welt, die er bisher nur aus Geschichten kennt. Und trotz aller Ereignisse verliert Alkazam nie den Wunsch, das Richtige zu tun – selbst wenn der einfachere Weg oft ein anderer wäre. \n\n  Seit dem frühen Tod seiner Mutter fehlt ihm der wichtigste Halt in seinem Leben. Die wachsende Distanz zu seinem Vater hinterlässt eine Lücke, die vor allem zwei Menschen füllen: sein schweigsamer Mentor und Leibwächter San'Dschinn sowie sein engster Freund Farin, Kommandant der malikischen Garde. Sie sind für Alkazam weit mehr als Gefährten – sie sind seine Familie. Seit seinem sechzehnten Geburtstag gehört außerdem noch das Löwenjunge Kedavra, ein Geburtstagsgeschenk seines Mentors, zu seinen Begleitern. \n\n Äußerlich wirkt der junge Prinz kaum wie der Held einer großen Legende. Er ist schlank, beinahe schmächtig, besitzt bronzefarbene Haut, dunkle Locken und außergewöhnlich ausdrucksstarke braune Augen, in denen sich gleichermaßen Neugier, Zweifel und Hoffnung spiegeln. \n\n Als sein sechzehnter Geburtstag schließlich alles verändert, wird aus dem behüteten Wüstenprinzen ein junger Flüchtling, der nicht nur um sein Leben kämpfen muss, sondern auch um seine Wahrheit. Auf seiner Reise durch Wüsten, Ruinen und fremde Länder begegnet Alkazam uralter Magie, gerät zwischen politische Intrigen und muss Entscheidungen treffen, die ihn weit über das hinauswachsen lassen, was er einst glaubte sein zu müssen. ",
         "bannerImage": "img/alkazam_banner.png",
         "image": "img/alkazam_portrait.png",
@@ -19,11 +21,13 @@
     {
         "name": "San'Dschinn",
         "quote": "„Wir ziehen weiter, keine Widerrede.“",
-        "age": "über 50 Jahre",
-        "role": "Leibwächter",
-        "origin": "unbekannt (Südpol)",
-        "affiliation": "Königshof",
-        "firstAppearance": "Kapitel 3",
+        "profile": [
+            { "key": "age", "label": "Alter", "value": "über 50 Jahre" },
+            { "key": "role", "label": "Rolle / Titel", "value": "Leibwächter" },
+            { "key": "origin", "label": "Herkunft", "value": "unbekannt (Südpol)", "filterable": true },
+            { "key": "affiliation", "label": "Zugehörigkeit", "value": "Königshof", "filterable": true },
+            { "key": "firstAppearance", "label": "Erster Auftritt", "value": "Kapitel 3", "filterable": true, "wide": true, "highlight": true }
+        ],
         "description": "San’Dschinn ist ein Mann, über dessen Vergangenheit selbst Alkazam nur wenig weiß. Schon vor der Geburt des jungen Prinzen diente er am malikischen Hof. Seit Alkazams erstem Lebenstag ist der schweigsame Hüne dessen Leibwächter, später auch sein Ausbilder und Mentor. Aus einer Pflicht wird in sechzehn Jahren eine Bindung, die weit darüber hinausgeht: Besonders nach dem Tod von Malika Salima und dem Rückzug seines Vaters aus dem Familienleben wird San’Dschinn für Alkazam zu einem Vaterersatz. \n\n Sein Äußeres macht ihn kaum weniger rätselhaft. San’Dschinn ist groß, extrem muskulös und vollständig kahlköpfig. Seine sehr dunkle Haut besitzt einen ungewöhnlichen gräulichen Ton. Besonders auffällig sind seine verschiedenfarbigen Augen: Das linke ist braun, das rechte grün-gelblich. Und ein weiteres Geheimnis seines Körpers offenbart er sogar erst nach Alkazams 16. Geburtstag… \n\n Auf Fremde wirkt seine kontrollierte, häufig mürrische Art einschüchternd; Gefühle zeigt er selten offen. Sein Handeln wird fast vollständig vom Schutz seines Schützlings bestimmt. Während Alkazam noch an das Gute in den Menschen glauben möchte, rechnet San’Dschinn stets mit Verrat, Gefahr und den Konsequenzen einer falschen Entscheidung. \n\n Nach der Flucht verändert sich seine Rolle erneut. Nun genügt es nicht mehr, Alkazam vor Angriffen zu schützen. San’Dschinn muss ihn darauf vorbereiten, ohne Palast, Diener und Privilegien zu überleben. Dabei bleibt sein Ziel unverändert: Alkazam am Leben zu halten – und ihn auf eine Welt vorzubereiten, die weit gefährlicher ist, als der junge Prinz bisher ahnte. ",
         "bannerImage": "img/sandschinn_banner.png",
         "image": "img/sandschinn_portrait.png",
@@ -38,11 +42,13 @@
     {
         "name": "Farin al Sakkr",
         "quote": "„Ich werde immer dein Freund sein, Kazam.“",
-        "age": "22 Jahre",
-        "role": "Kommandant der malikischen Garde",
-        "origin": "Madina",
-        "affiliation": "Malikische Garde",
-        "firstAppearance": "Kapitel 3",
+        "profile": [
+            { "key": "age", "label": "Alter", "value": "22 Jahre" },
+            { "key": "role", "label": "Rolle / Titel", "value": "Kommandant der malikischen Garde" },
+            { "key": "origin", "label": "Herkunft", "value": "Madina", "filterable": true },
+            { "key": "affiliation", "label": "Zugehörigkeit", "value": "Malikische Garde", "filterable": true },
+            { "key": "firstAppearance", "label": "Erster Auftritt", "value": "Kapitel 3", "filterable": true, "wide": true, "highlight": true }
+        ],
         "description": "Mit zweiundzwanzig Jahren trägt Farin al Sakkr bereits eine Verantwortung, für die andere ein halbes Leben brauchen. Als Kommandant der malikischen Garde gehört er zu den wichtigsten Beschützern des Königshauses – und zu den fähigsten jungen Kriegern des Südpols. Doch hinter der rot-goldenen Uniform und dem selbstbewussten Auftreten steckt jemand, dessen Weg an den malikischen Hof alles andere als selbstverständlich war. \n\n Als Waisenjunge kam er durch eines der Förderprojekte der Malika Salima an den Hof und trat mit vierzehn Jahren in die Garde ein. Schon früh fielen sein außergewöhnliches Talent mit der Lanze, sein strategisches Denken und seine unerschütterliche Loyalität gegenüber seinen Kameraden und der malikischen Familie auf. \n\n Am Hof lernte Farin auch Alkazam kennen. Was als Aufgabe zum Schutz des Thronfolgers beginnt, entwickelt sich über die Jahre zu einer engen Freundschaft. Obwohl sechs Jahre zwischen ihnen liegen und ihre Herkunft unterschiedlicher kaum sein könnten, werden sie beste Freunde. Für Alkazam ist Farin nicht nur Beschützer und Kommandant seiner Garde, sondern einer der wenigen Menschen, denen er bedingungslos vertraut. \n\n Farin besitzt eine schlank-athletische Statur, kurzes dunkles Haar, einen markanten Bart und auffallend leuchtend blaue Augen. Meist trägt er die rot-goldene Eliteuniform der malikischen Garde. Mut und Entschlossenheit verbinden sich bei ihm mit Humor, Verlässlichkeit und einer natürlichen Offenheit. \n\n Seine ungewöhnlichste Fähigkeit verdankt Farin einem mystischen Tattoo auf seinem Rücken. Es verleiht ihm die Kräfte eines Falken und ermöglicht ihm, sich vollständig oder teilweise in einen solchen zu verwandeln. Während eines Attentats auf Malik Arvada offenbart der damals Zwanzigjährige seine lange verborgene Kraft und rettet dem Herrscher und zahlreichen Gardisten das Leben. Nach dem Tod des bisherigen Kommandanten wählen ihn die Überlebenden einstimmig zu dessen Nachfolger. \n\n Als Alkazams sechzehnter Geburtstag die Ordnung am Hof erschüttert, muss Farin schließlich entscheiden, wem seine Loyalität wirklich gilt. Für ihn ist die Antwort eindeutig: nicht einem Titel allein, sondern den Menschen, denen er vertraut.",
         "bannerImage": "img/farin_banner.png",
         "image": "img/farin_portrait.png",
@@ -59,11 +65,13 @@
     {
         "name": "An Cabut (Platzhalter)",
         "quote": "„Ein Geheimnis bewahrt man am besten, indem man es in voller Sicht versteckt.“",
-        "age": "62 Jahre",
-        "role": "Gelehrter & Artefakt-Schmied",
-        "origin": "Orakel von Illyria",
-        "affiliation": "Unabhängig",
-        "firstAppearance": "Kapitel 3: Das verstaubte Archiv",
+        "profile": [
+            { "key": "age", "label": "Alter", "value": "62 Jahre" },
+            { "key": "role", "label": "Rolle / Titel", "value": "Gelehrter & Artefakt-Schmied" },
+            { "key": "origin", "label": "Herkunft", "value": "Orakel von Illyria", "filterable": true },
+            { "key": "affiliation", "label": "Zugehörigkeit", "value": "Unabhängig", "filterable": true },
+            { "key": "firstAppearance", "label": "Erster Auftritt", "value": "Kapitel 3: Das verstaubte Archiv", "filterable": true, "wide": true, "highlight": true }
+        ],
         "description": "Eldrin verbrachte Jahrzehnte damit, alte arkanische Schriften zu übersetzen. Er bildete Aurelia aus, verschwand jedoch nach der Entdeckung der Schicksalstafel spurlos aus der Stadt.",
         "bannerImage": "img/ancabut_banner.png",
         "image": "img/ancabut_portrait.png",
